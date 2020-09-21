@@ -1,5 +1,0 @@
-name: golang
-services: 
-image: golang:alpine
-forward:
-  - 8080:8080
