@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: internet
+spec:
+  type: LoadBalancer 
+  ports:
+    - name: http
+      port: 8888
+  selector:
+    app: internet
