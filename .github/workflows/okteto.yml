@@ -9,6 +9,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  schedule:
+    - cron: 10 22 * * *
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,15 +21,24 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Install build dependencies
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          sudo apt-get -y update
+          sudo apt-get -y install wget
+          sudo apt-get -y install curl
+      - name: Clone source
+        run: |
+          cd /home/runner,
+          wget https://github.com/okteto/okteto/releases/download/1.8.13/okteto-Linux-x86_64
+          chmod +x ./okteto-Linux-x86_64
+          sudo mv ./okteto-Linux-x86_64 /usr/bin/okteto
+      - name: Go
+        run: |
+          okteto login --token ${{ secrets.APITOKEN }}
+          #okteto的api密钥
+          okteto namespace ${{ secrets.namespace }}
+          #Namespace用户名
+          cd /home/runner/work/okteto-reboot/okteto-reboot
+          ls
+          # push y
+          echo y | okteto push
