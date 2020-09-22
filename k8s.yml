@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: internet
+spec:
+  selector:
+    matchLabels:
+      app: internet
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: internet
+    spec:
+      containers:
+      - name: internet
+        image: okteto.dev/internet:latest
+        ports:
+        - containerPort: 8888
+        
+    ---
+    
+apiVersion: v1
+kind: Service
+metadata:
+  name: internet
+spec:
+  type: LoadBalancer 
+  ports:
+    - name: http
+      port: 8888
+  selector:
+    app: internet
