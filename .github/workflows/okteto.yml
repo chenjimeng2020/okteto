@@ -40,4 +40,4 @@ jobs:
       uses: okteto/push@master
       with:
         namespace: ${{ secrets.namespace }}
-        name: okteto
+        name: k8s
