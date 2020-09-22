@@ -36,7 +36,8 @@ jobs:
         namespace: ${{ secrets.namespace }}
         manifest: k8s.yml
     
-    - name: Push
+    - name: "Push changes"
       uses: okteto/push@master
       with:
         namespace: ${{ secrets.namespace }}
+        name: okteto
