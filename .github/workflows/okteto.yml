@@ -35,9 +35,6 @@ jobs:
         run: |
           okteto login --token ${{ secrets.APITOKEN }}
           #okteto的api密钥
-          okteto init
           okteto namespace ${{ secrets.namespace }}
           #Namespace用户名
-          ls
-          # push y
-          echo y | okteto push
+          okteto up
